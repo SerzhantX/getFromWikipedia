@@ -4,12 +4,6 @@ public class Menu {
 
 	public static boolean createMenu() {
 
-		if (isCreate) {
-
-			return false;
-		}
-
-
 		return true;
 	}
 
