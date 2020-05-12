@@ -22,8 +22,8 @@ public class UserInterface {
 		Scanner scanner = new Scanner(System.in);
 
 		System.out.println("1 - Поиск");
-		System.out.println("1 - История поиска");
-		System.out.println("2 - Выход");
+		System.out.println("2 - История поиска");
+		System.out.println("3 - Выход");
 
 		while (true) {
 
