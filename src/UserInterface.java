@@ -13,6 +13,10 @@ public class UserInterface {
 		return userInterface;
 	}
 
+	private UserInterface() {
+
+	}
+
 	private boolean isAuthorization = false;
 
 	private String login;
@@ -23,7 +27,8 @@ public class UserInterface {
 
 		System.out.println("1 - Поиск");
 		System.out.println("2 - История поиска");
-		System.out.println("3 - Выход");
+		System.out.println("3 - Выйти");
+		System.out.println("4 - Закрыть программу");
 
 		while (true) {
 
@@ -53,6 +58,11 @@ public class UserInterface {
 			if ("3".equals(choice)) {
 
 				isAuthorization = false;
+				break;
+			}
+
+			if ("4".equals(choice)) {
+
 				return false;
 			}
 
@@ -118,35 +128,45 @@ public class UserInterface {
 		isAuthorization = true;
 	}
 
-	private void startMenu() {
+	private boolean startMenu() {
 
 		Scanner scanner = new Scanner(System.in);
 
 		System.out.println("1 - Войти");
 		System.out.println("2 - Зарегистрироваться");
+		System.out.println("3 - Закрыть программу");
 
 		while (true) {
 
 			String choice = scanner.nextLine();
 
 			if ("1".equals(choice)) {
+
 				authorization();
 				break;
 			}
 
 			if ("2".equals(choice)) {
+
 				registration();
 				break;
 			}
 
+			if ("3".equals(choice)) {
+
+				return false;
+			}
+
 			System.out.println("Некорректная команда");
 		}
+
+		return true;
 	}
 
 	public boolean printInterface() {
 
 		if (!isAuthorization) {
-			startMenu();
+			return startMenu();
 		}
 
 		return menu();
