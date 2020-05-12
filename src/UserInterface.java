@@ -13,13 +13,49 @@ public class UserInterface {
 		return userInterface;
 	}
 
+	private DataBase dataBase;
+
 	private UserInterface() {
 
+		dataBase = DataBase.getInstance();
 	}
 
 	private boolean isAuthorization = false;
 
 	private String login;
+
+	private void searchOnWikipedia() {
+
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println("Введите запрос: ");
+		String query = scanner.nextLine();
+
+		if ("".equals(query)) {
+			System.out.println("Вы не ввели запрос");
+			return;
+		}
+
+		String response = "Ваня, давай пили";
+
+		///////////////////////////////
+		// Добавить запрос на википедию
+		///////////////////////////////
+
+		dataBase.setHistory(login, query);
+
+		System.out.println(response);
+	}
+
+	private void printHistory() {
+
+		String[] history = dataBase.getHistory(login);
+
+		for (var h : history) {
+
+			System.out.println(h);
+		}
+	}
 
 	private boolean menu() {
 
@@ -36,21 +72,14 @@ public class UserInterface {
 
 			if ("1".equals(choice)) {
 
-				System.out.println("Введите запрос: ");
-				String query = scanner.nextLine();
-
-				//////////////////////////////
-				/// Поиск запроса на википедии
-				//////////////////////////////
+				searchOnWikipedia();
 
 				break;
 			}
 
 			if ("2".equals(choice)) {
 
-				////////////////////////
-				/// Вывод истории поиска
-				////////////////////////
+				printHistory();
 
 				break;
 			}
@@ -67,6 +96,8 @@ public class UserInterface {
 			}
 
 			System.out.println("Некорректная команда");
+
+			break;
 		}
 
 		return  true;
@@ -81,16 +112,23 @@ public class UserInterface {
 			System.out.print("Логин: ");
 			login = scanner.nextLine();
 
+			if ("".equals(login)) {
+
+				System.out.print("Логин не должен быть пустым");
+				continue;
+			}
+
 			System.out.print("Пароль: ");
 			String password = scanner.nextLine();
 
-			///////////////////////////////
-			/// проверка авторизации в базе
-			///////////////////////////////
+			if (dataBase.authorization(login, password)) {
 
-			break;
+				break;
+			}
 
-			//System.out.println("Пользователя не существует");
+			System.out.println("Данного пользователя нет в базе");
+
+			return;
 		}
 
 		System.out.println("Вы успешно вошли");
@@ -104,24 +142,32 @@ public class UserInterface {
 
 		while (true) {
 
-			System.out.println("Придумайте логин: ");
+			System.out.print("Придумайте логин: ");
 			login = scanner.nextLine();
 
-			//////////////////////////
-			/// проверка логина в базе
-			//////////////////////////
+			if ("".equals(login)) {
 
-			break;
+				System.out.println("Логин не должен быть пустым");
+				continue;
+			}
 
-			//System.out.println("Пользователь с таким логином уже есть в базе");
+			if (dataBase.checkLogin(login)) {
+
+				break;
+			}
+
+			System.out.println("Пользователь с таким логином уже есть в базе");
 		}
 
-		////////////////////////////////
-		/// внесение пользователя в базу
-		////////////////////////////////
-
-		System.out.println("Придумайте пароль: ");
+		System.out.print("Придумайте пароль: ");
 		String password = scanner.nextLine();
+
+		if (!dataBase.addNewUser(login, password)) {
+
+			System.out.println("Ошибка регистрации");
+
+			return;
+		}
 
 		System.out.println("Вы успешно зарегистрировались");
 
@@ -158,6 +204,8 @@ public class UserInterface {
 			}
 
 			System.out.println("Некорректная команда");
+
+			break;
 		}
 
 		return true;
