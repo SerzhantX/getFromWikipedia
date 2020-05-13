@@ -42,7 +42,9 @@ public class UserInterface {
 
 		String response = wikipedia.getInfo(query);
 
-		dataBase.setHistory(login, query);
+		if (!dataBase.setHistory(login, query)) {
+			System.out.println("Ошибка с БД");
+		}
 
 		System.out.println(response);
 	}
@@ -66,39 +68,29 @@ public class UserInterface {
 		System.out.println("3 - Выйти");
 		System.out.println("4 - Закрыть программу");
 
-		while (true) {
+		String choice = scanner.nextLine();
 
-			String choice = scanner.nextLine();
+		if ("1".equals(choice)) {
 
-			if ("1".equals(choice)) {
-
-				searchOnWikipedia();
-
-				break;
-			}
-
-			if ("2".equals(choice)) {
-
-				printHistory();
-
-				break;
-			}
-
-			if ("3".equals(choice)) {
-
-				isAuthorization = false;
-				break;
-			}
-
-			if ("4".equals(choice)) {
-
-				return false;
-			}
-
-			System.out.println("Некорректная команда");
-
-			break;
+			searchOnWikipedia();
 		}
+
+		if ("2".equals(choice)) {
+
+			printHistory();
+		}
+
+		if ("3".equals(choice)) {
+
+			isAuthorization = false;
+		}
+
+		if ("4".equals(choice)) {
+
+			return false;
+		}
+
+		System.out.println("Некорректная команда");
 
 		return  true;
 	}
@@ -182,31 +174,24 @@ public class UserInterface {
 		System.out.println("2 - Зарегистрироваться");
 		System.out.println("3 - Закрыть программу");
 
-		while (true) {
+		String choice = scanner.nextLine();
 
-			String choice = scanner.nextLine();
+		if ("1".equals(choice)) {
 
-			if ("1".equals(choice)) {
-
-				authorization();
-				break;
-			}
-
-			if ("2".equals(choice)) {
-
-				registration();
-				break;
-			}
-
-			if ("3".equals(choice)) {
-
-				return false;
-			}
-
-			System.out.println("Некорректная команда");
-
-			break;
+			authorization();
 		}
+
+		if ("2".equals(choice)) {
+
+			registration();
+		}
+
+		if ("3".equals(choice)) {
+
+			return false;
+		}
+
+		System.out.println("Некорректная команда");
 
 		return true;
 	}

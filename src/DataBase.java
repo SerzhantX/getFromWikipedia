@@ -21,18 +21,17 @@ public class DataBase {
 
 	private Connection connection;
 
-	private boolean connectToDB() {
+	private void connectToDB() {
 
 		String url = "jdbc:sqlite:./db/getFromWikipedia.db";
 
 		try {
 
 			connection = DriverManager.getConnection(url);
-			return true;
 
 		} catch(SQLException e) {
 
-			return false;
+			System.out.println("Ошибка подключения к БД");
 		}
 	}
 

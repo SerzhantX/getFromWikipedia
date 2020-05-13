@@ -49,7 +49,6 @@ public class Wikipedia {
 
         input = input.substring(startIndex, endIndex);
 
-        //boolean flag = false;
         String result = "";
 
         for (int i = 0; i < input.length(); i++) {
@@ -93,7 +92,7 @@ public class Wikipedia {
             }
         }
 
-        result += input.substring(startIndex, input.length());
+        result += input.substring(startIndex);
 
         return result;
     }
