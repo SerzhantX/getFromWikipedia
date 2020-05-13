@@ -18,17 +18,21 @@ public class UserInterface {
 	private UserInterface() {
 
 		dataBase = DataBase.getInstance();
+
+		wikipedia = new Wikipedia();
 	}
 
 	private boolean isAuthorization = false;
 
 	private String login;
 
+	private Wikipedia wikipedia;
+
 	private void searchOnWikipedia() {
 
 		Scanner scanner = new Scanner(System.in);
 
-		System.out.println("Введите запрос: ");
+		System.out.print("Введите запрос: ");
 		String query = scanner.nextLine();
 
 		if ("".equals(query)) {
@@ -36,11 +40,7 @@ public class UserInterface {
 			return;
 		}
 
-		String response = "Ваня, давай пили";
-
-		///////////////////////////////
-		// Добавить запрос на википедию
-		///////////////////////////////
+		String response = wikipedia.getInfo(query);
 
 		dataBase.setHistory(login, query);
 

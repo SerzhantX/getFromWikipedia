@@ -5,15 +5,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 
-public class getInfoFromWiki {
+public class Wikipedia {
 
     public String getInfo(String request) {
 
         String body = "";
 
         try {
-
-
 
             URL url = new URL("https://ru.wikipedia.org/wiki/" + replaceSpace(request));
 
@@ -45,6 +43,9 @@ public class getInfoFromWiki {
 
         int startIndex = input.indexOf("<p><b>") + 5;
         int endIndex = input.indexOf("</p><div") + 1;
+        if (endIndex < startIndex) {
+			endIndex = input.indexOf("</p><h") + 1;
+		}
 
         input = input.substring(startIndex, endIndex);
 
@@ -68,20 +69,27 @@ public class getInfoFromWiki {
     private String cutCode(String input) {
 
         int startIndex = 0;
-
-        boolean flag = false;
         String result = "";
+        boolean isCode = false;
 
         for (int i = 1; i < input.length(); i++) {
 
-            if (input.charAt(i) == '#' && input.charAt(i - 1) == '&') {
-                result += input.substring(startIndex, i - 1) + " ";
-                flag = true;
-            }
+            if (input.charAt(i - 1) == '&' && input.charAt(i) == '#') {
 
-            if (input.charAt(i) == ';') {
-                flag = false;
+				if (!(input.charAt(i + 1) == '9' && input.charAt(i + 2) == '3' && input.charAt(i + 3) == ';')) {
+
+
+					result += input.substring(startIndex, i - 1);
+				}
+
+				isCode = true;
+			}
+
+            if (input.charAt(i) == ';' && isCode) {
+
                 startIndex = i + 1;
+
+                isCode = false;
             }
         }
 

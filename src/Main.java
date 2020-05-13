@@ -4,6 +4,6 @@ public class Main {
 
 		UserInterface userInterface = UserInterface.getInstance();
 
-		while (userInterface.printInterface()) {}
+		while (userInterface.printInterface()) { }
 	}
 }
