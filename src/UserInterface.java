@@ -70,27 +70,21 @@ public class UserInterface {
 
 		String choice = scanner.nextLine();
 
-		if ("1".equals(choice)) {
-
-			searchOnWikipedia();
+		switch (choice) {
+			case "1":
+				searchOnWikipedia();
+				break;
+			case "2":
+				printHistory();
+				break;
+			case "3":
+				isAuthorization = false;
+				break;
+			case "4":
+				return false;
+			default:
+				System.out.println("Некорректная команда");
 		}
-
-		if ("2".equals(choice)) {
-
-			printHistory();
-		}
-
-		if ("3".equals(choice)) {
-
-			isAuthorization = false;
-		}
-
-		if ("4".equals(choice)) {
-
-			return false;
-		}
-
-		System.out.println("Некорректная команда");
 
 		return  true;
 	}
@@ -176,22 +170,18 @@ public class UserInterface {
 
 		String choice = scanner.nextLine();
 
-		if ("1".equals(choice)) {
-
-			authorization();
+		switch (choice) {
+			case "1":
+				authorization();
+				break;
+			case "2":
+				registration();
+				break;
+			case "3":
+				return false;
+			default:
+				System.out.println("Некорректная команда");
 		}
-
-		if ("2".equals(choice)) {
-
-			registration();
-		}
-
-		if ("3".equals(choice)) {
-
-			return false;
-		}
-
-		System.out.println("Некорректная команда");
 
 		return true;
 	}
